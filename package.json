@@ -1,0 +1,41 @@
+{
+  "name": "your-celebrity-match",
+  "version": "2.2.1",
+  "description": "your-celebrity-match uses the Personality Insights service to find a celebrity similar to you based off of your online presence",
+  "private": true,
+  "scripts": {
+    "start": "node app.js"
+  },
+  "dependencies": {
+    "async": "^2.0.0-rc.3",
+    "body-parser": "^1.14.2",
+    "express": "^4.13.4",
+    "express-rate-limit": "^2.1.0",
+    "express-secure-only": "^0.2.1",
+    "extend": "^3.0.0",
+    "helmet": "^1.1.0",
+    "jade": "^1.11.0",
+    "mongoose": "^4.4.5",
+    "q": "^2.0.3",
+    "twitter": "^0.2.13",
+    "watson-developer-cloud": "^1.2.4"
+  },
+  "author": "IBM Corp.",
+  "contributors": [
+    {
+      "name": "German Attanasio Ruiz",
+      "email": "germanatt@us.ibm.com"
+    },
+    {
+      "name": "Jeff Stylos",
+      "email": "jsstylos@us.ibm.com"
+    }
+  ],
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/watson-developer-cloud/yourcelebritymatch/issues"
+  },
+  "engines": {
+    "node": ">=0.12.0"
+  }
+}

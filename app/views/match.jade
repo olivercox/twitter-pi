@@ -1,0 +1,131 @@
+extends ./layout.jade
+
+block title
+  title #{user.name}'s Celebrity Match
+
+block extra-header
+  link(rel='stylesheet', href='/css/page.css')
+
+block extra-scripts
+  script(type='text/javascript', src='/js/page.js')
+
+block content
+  .overlay-screen.how-it-worked(style='display: none')
+    .container
+      .row
+        .col-md-8
+          a.button.h3.back(href='javascript:void(0)') &#8592; BACK
+          h3 How does this app analyze your personality?
+          p Your Celebrity Match uses the&nbsp;
+            a(href='https://www.ibm.com/smarterplanet/us/en/ibmwatson/developercloud/personality-insights.html') IBM Watson Personality Insights service
+            | &nbsp;to analyze the language in your public Twitter feed and apply it to a spectrum of characteristics. Then, we compare your results to the Twitter feeds of 100+ celebrities.
+          h3 What do these traits mean?
+          p These traits are drawn from&nbsp;
+            a(href='https://en.wikipedia.org/wiki/Big_Five_personality_traits') the Big Five personality traits
+            | ,&nbsp;
+            a(href='https://www.ibm.com/smarterplanet/us/en/ibmwatson/developercloud/doc/personality-insights/models.shtml#outputNeeds') the aspects of a product likely to resonate with someone
+            | &nbsp;, and&nbsp;
+            a(href='https://www.ibm.com/smarterplanet/us/en/ibmwatson/developercloud/doc/personality-insights/models.shtml#outputValues') the motivating factors that influence decision-making
+            | .
+          h3 Privacy & User Agreement
+          p By using these service, you agree to our&nbsp;
+            a(href='https://www.ibm.com/privacy/us/en/') privacy policy
+            | &nbsp;and&nbsp;
+            a(href='/tos') Terms of Use
+            | .
+  include ./navbar.jade
+  .container.page-content
+    if info
+      .row
+        .col-md-8.col-md-push-2
+          div(role='alert').alert.alert-info
+            p
+              span TIP:
+              | #{info}
+
+    .row
+      .col-md-8.col-md-push-2
+        .panel-main
+          include ./match-panel.jade
+
+    .row.how-you-match-label
+      .col-md-12
+        p How you match up against other celebs:
+
+    .row.other-celebs
+      .col-md-6.most-similar
+        .panel-comparisons
+          .panel-heading
+            p
+              | Most
+              span &nbsp;similar&nbsp;
+              | to you
+          .panel-body
+            .row
+              each c, index in similar_personalities
+                .col-sm-4.col-xs-6.text-center.other-celeb.personality
+                  .avatar-small
+                    div.overlay-yellow
+                      div.percentage
+                        h4 #{Math.round(c.distance * 100)}%
+                    img(title='Compare me to #{c.user.name}', alt='#{c.user.name} picture', src='#{c.user.image}',id='s_#{index}')
+                  h5
+                    h5 #{c.user.name}
+              each c, index in similar_needs
+                .col-sm-4.col-xs-6.text-center.other-celeb.needs.hide-traits
+                  .avatar-small
+                    div.overlay-yellow
+                      div.percentage
+                        h4 #{Math.round(c.distance * 100)}%
+                    img(title='Compare me to #{c.user.name}', alt='#{c.user.name} picture', src='#{c.user.image}',id='s_#{index}')
+                  h5
+                    h5 #{c.user.name}
+              each c, index in similar_values
+                .col-sm-4.col-xs-6.text-center.other-celeb.values.hide-traits
+                  .avatar-small
+                    div.overlay-yellow
+                      div.percentage
+                        h4 #{Math.round(c.distance * 100)}%
+                    img(title='Compare me to #{c.user.name}', alt='#{c.user.name} picture', src='#{c.user.image}',id='s_#{index}')
+                  h5
+                    h5 #{c.user.name}
+      .col-md-6.most-different
+        .panel-comparisons
+          .panel-heading
+            p
+              | Most
+              span &nbsp;different&nbsp;
+              | from you
+          .panel-body
+            .row
+              each c,index in different_personalities
+                .col-sm-4.col-xs-6.text-center.other-celeb.personality
+                  .avatar-small
+                    div.overlay-red
+                      div.percentage
+                        h4 #{Math.round(c.distance * 100)}%
+                    img(title='Compare me to #{c.user.name}', alt='#{c.user.name} picture', src='#{c.user.image}',id='d_#{index}')
+                  h5 #{c.user.name}
+              each c,index in different_needs
+                .col-sm-4.col-xs-6.text-center.other-celeb.needs.hide-traits
+                  .avatar-small
+                    div.overlay-red
+                      div.percentage
+                        h4 #{Math.round(c.distance * 100)}%
+                    img(title='Compare me to #{c.user.name}', alt='#{c.user.name} picture', src='#{c.user.image}',id='d_#{index}')
+                  h5 #{c.user.name}
+              each c,index in different_values
+                .col-sm-4.col-xs-6.text-center.other-celeb.values.hide-traits
+                  .avatar-small
+                    div.overlay-red
+                      div.percentage
+                        h4 #{Math.round(c.distance * 100)}%
+                    img(title='Compare me to #{c.user.name}', alt='#{c.user.name} picture', src='#{c.user.image}',id='d_#{index}')
+                  h5 #{c.user.name}
+    script(type='text/javascript').
+      var similar_personalities =!{JSON.stringify(similar_personalities)};
+      var different_personalities =!{JSON.stringify(different_personalities)};
+      var similar_needs =!{JSON.stringify(similar_needs)};
+      var different_needs =!{JSON.stringify(different_needs)};
+      var similar_values =!{JSON.stringify(similar_values)};
+      var different_values =!{JSON.stringify(different_values)};
